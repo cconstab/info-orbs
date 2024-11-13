@@ -13,8 +13,8 @@ const float TOTAL_ANGLE = 270.0;
 static float lastNeedleAngle[5] = {-1,-1,-1,-1,-1};
 static float lastValue[5] = {-1,-1,-1,-1,-1};
 // Configure measurements and units
-static String measure[5] = {"RPM", "\xF7 C","", "Watts", "%"};
-static String units[5] = {"Fan Speed","Temp","SWR", "Power", "Modulation"};
+static String measure[5] = {"RPM", "\xF7 C","SWR", "Watts", "%"};
+static String units[5] = {"Fan Speed","Temp","KRYZ LPFM", "Power", "Modulation"};
 //Configure color limits ^ direction
 static float colorLimits[5][3] = {
     {0,  7000, 8000}, //FanSpeed
@@ -46,7 +46,7 @@ class NautelWidget : public Widget {
     void displayDidget(int displayIndex, const String& didget, int font, int fontSize, uint32_t color, bool shadowing);
     void displayDidget(int displayIndex, const String& didget, int font, int fontSize, uint32_t color);
     void displaySeconds(int displayIndex, int seconds, int color);
-    void displayGauge(int displayIndex, float value, int minValue, int maxValue, int color);
+    void displayGauge(int displayIndex, float value, int minValue, int maxValue, int measureColor, int unitsColor);
     void displayAmPm(uint32_t color);
 
     void displayRadioStation(uint32_t color);

@@ -72,11 +72,11 @@ void NautelWidget::draw(bool force) {
 
 //if (m_secondSingle != m_lastSecondSingle || force) {
 
-        displayGauge(0, fanspeed, 5000, 9000, FOREGROUND_COLOR);
-        displayGauge(1, heatsinktemp, 0, 100, FOREGROUND_COLOR);
-        displayGauge(2, swr, 0, 5, FOREGROUND_COLOR);
-        displayGauge(3, poweroutput, 0, 50, FOREGROUND_COLOR);
-        displayGauge(4, peakmodulation, 0, 110, FOREGROUND_COLOR);
+        displayGauge(0, fanspeed, 5000, 9000, FOREGROUND_COLOR, FOREGROUND_COLOR);
+        displayGauge(1, heatsinktemp, 0, 100, FOREGROUND_COLOR, FOREGROUND_COLOR);
+        displayGauge(2, swr, 0, 5, FOREGROUND_COLOR, TFT_BLUE);
+        displayGauge(3, poweroutput, 0, 50, FOREGROUND_COLOR, FOREGROUND_COLOR);
+        displayGauge(4, peakmodulation, 0, 110, FOREGROUND_COLOR, FOREGROUND_COLOR);
 
         m_lastSecondSingle = m_secondSingle;
 
@@ -133,7 +133,7 @@ void NautelWidget::displaySeconds(int displayIndex, int seconds, int color) {
 }
 
 
-void NautelWidget::displayGauge(int displayIndex, float value, int minValue, int maxValue, int color) {
+void NautelWidget::displayGauge(int displayIndex, float value, int minValue, int maxValue, int measureColor, int unitsColor) {
     m_manager.reset();
     m_manager.selectScreen(displayIndex);
     TFT_eSPI& tft = m_manager.getDisplay();
@@ -245,10 +245,11 @@ void NautelWidget::displayGauge(int displayIndex, float value, int minValue, int
     tft.drawCircle(centerX, centerY, 60, activeColor);
     
     // Display Units and Measures
-    tft.setTextColor(color);
     tft.setTextSize(2);
     int valueWidth = 5 * String(value).length(); // Approximate width of the text
+    tft.setTextColor(measureColor);
     tft.drawString(measure[displayIndex],centerX, SCREEN_SIZE - 80, 1);
+    tft.setTextColor(unitsColor);
     tft.drawString(units[displayIndex],centerX , SCREEN_SIZE - 30, 1);
     
     // Draw Value Erase last value the update new value
